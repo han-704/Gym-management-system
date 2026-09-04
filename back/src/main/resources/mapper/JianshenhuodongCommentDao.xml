@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.JianshenhuodongCommentDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.JianshenhuodongCommentEntity" id="jianshenhuodongCommentMap">
+        <result property="id" column="id"/>
+        <result property="jianshenhuodongId" column="jianshenhuodong_id"/>
+        <result property="huiyuanzhanghao" column="huiyuanzhanghao"/>
+        <result property="huiyuanxingming" column="huiyuanxingming"/>
+        <result property="pinglunneirong" column="pinglunneirong"/>
+        <result property="pinglunshijian" column="pinglunshijian"/>
+        <result property="addtime" column="addtime"/>
+    </resultMap>
+
+    <select id="selectListView"
+		resultType="com.entity.JianshenhuodongCommentEntity" >
+
+		SELECT  jianshenhuodong_comment.* FROM jianshenhuodong_comment 	        
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+	<select id="selectView"
+		resultType="com.entity.view.JianshenhuodongCommentView" >
+		SELECT * FROM jianshenhuodong_comment jianshenhuodong_comment <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+</mapper>

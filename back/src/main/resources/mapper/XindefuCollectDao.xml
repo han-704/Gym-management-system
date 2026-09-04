@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.XindefuCollectDao">
+
+    <resultMap type="com.entity.XindefuCollectEntity" id="xindefuCollectMap">
+        <result property="id" column="id"/>
+        <result property="addtime" column="addtime"/>
+        <result property="xindefuId" column="xindefu_id"/>
+        <result property="huiyuanzhanghao" column="huiyuanzhanghao"/>
+    </resultMap>
+    
+    <resultMap type="com.entity.view.XindefuCollectView" id="xindefuCollectViewMap">
+        <result property="id" column="id"/>
+        <result property="addtime" column="addtime"/>
+        <result property="xindefuId" column="xindefu_id"/>
+        <result property="huiyuanzhanghao" column="huiyuanzhanghao"/>
+        <result property="xindefu.id" column="xd_id"/>
+        <result property="xindefu.title" column="xindefu_title"/>
+        <result property="xindefu.content" column="xindefu_content"/>
+        <result property="xindefu.fenlei" column="xindefu_fenlei"/>
+        <result property="xindefu.fengmian" column="xindefu_fengmian"/>
+        <result property="xindefu.fabuzhanghao" column="xindefu_fabuzhanghao"/>
+        <result property="xindefu.fabuxingming" column="xindefu_fabuxingming"/>
+        <result property="xindefu.fabushijian" column="xindefu_fabushijian"/>
+        <result property="xindefu.thumbsupnum" column="xindefu_thumbsupnum"/>
+        <result property="xindefu.clicknum" column="xindefu_clicknum"/>
+        <result property="xindefu.collectnum" column="xindefu_collectnum"/>
+        <result property="xindefu.commentnum" column="xindefu_commentnum"/>
+    </resultMap>
+
+    <select id="selectListView" resultMap="xindefuCollectViewMap">
+        SELECT c.id, c.addtime, c.xindefu_id, c.huiyuanzhanghao,
+               x.id as xd_id, 
+               x.title as xindefu_title, 
+               x.content as xindefu_content, 
+               x.fenlei as xindefu_fenlei, 
+               x.fengmian as xindefu_fengmian, 
+               x.fabuzhanghao as xindefu_fabuzhanghao, 
+               x.fabuxingming as xindefu_fabuxingming, 
+               x.fabushijian as xindefu_fabushijian, 
+               x.thumbsupnum as xindefu_thumbsupnum, 
+               x.clicknum as xindefu_clicknum,
+               x.collectnum as xindefu_collectnum,
+               x.commentnum as xindefu_commentnum
+        FROM xindefu_collect c
+        LEFT JOIN xindefu x ON c.xindefu_id = x.id
+        <where>
+            1=1 ${ew.sqlSegment}
+        </where>
+        ORDER BY c.addtime DESC
+    </select>
+
+</mapper>

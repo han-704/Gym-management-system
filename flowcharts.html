@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f2f5; padding: 40px; font-family: 'Microsoft YaHei', sans-serif; display: flex; flex-direction: column; align-items: center; gap: 60px; }
+  .chart-card { background: #fff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+  h2 { font-size: 28px; color: #1a1a2e; margin-bottom: 30px; }
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .box { width: 220px; padding: 14px 20px; border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; letter-spacing: 1px; }
+  .start-end { background: #e8f5e9; color: #2e7d32; border: 2px solid #4caf50; }
+  .process { background: #e3f2fd; color: #1565c0; border: 2px solid #42a5f5; }
+  .decision { background: #fff3e0; color: #e65100; border: 2px solid #ff9800; transform: rotate(0deg); border-radius: 10px; position: relative; }
+  .arrow { width: 2px; height: 28px; background: #90a4ae; position: relative; }
+  .arrow::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 8px solid #90a4ae; }
+  .row { display: flex; align-items: flex-start; gap: 20px; }
+  .branch { display: flex; flex-direction: column; align-items: center; }
+  .label { font-size: 13px; color: #666; margin: 2px 0; font-weight: normal; }
+  .label-yes { color: #4caf50; }
+  .label-no { color: #f44336; }
+  .side-arrow-h { width: 80px; height: 2px; background: #90a4ae; position: relative; }
+  .side-arrow-h::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 7px solid #90a4ae; }
+  .side-arrow-v { width: 2px; height: 20px; background: #90a4ae; position: relative; }
+  .side-arrow-v::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid #90a4ae; }
+  .connector { display: flex; align-items: center; }
+  .empty { width: 220px; }
+</style>
+</head>
+<body>
+
+<!-- 登录流程图 -->
+<div class="chart-card" id="login-chart">
+  <h2>🔐 用户登录流程</h2>
+  <div class="flow">
+    <div class="box start-end">开始</div>
+    <div class="arrow"></div>
+    <div class="box process">用户输入账号密码</div>
+    <div class="arrow"></div>
+    <div class="box process">点击登录按钮</div>
+    <div class="arrow"></div>
+    <div class="box decision">前端表单验证</div>
+    <div class="row">
+      <div class="branch">
+        <div class="label label-no">❌ 未通过</div>
+        <div class="side-arrow-v"></div>
+        <div class="box process" style="background:#ffebee;color:#c62828;border-color:#f44336;">提示错误信息</div>
+        <div class="side-arrow-v"></div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:80px;height:2px;background:#90a4ae;"></div>
+          <div style="border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:7px solid #90a4ae;"></div>
+        </div>
+      </div>
+      <div class="branch">
+        <div class="label label-yes">✅ 通过</div>
+        <div class="side-arrow-v"></div>
+        <div class="box process">发送请求到后端</div>
+        <div class="side-arrow-v"></div>
+        <div class="box decision">数据库验证<br>账号密码</div>
+        <div class="row" style="margin-top:8px;">
+          <div class="branch">
+            <div class="label label-no">❌ 失败</div>
+            <div class="side-arrow-v"></div>
+            <div class="box process" style="background:#ffebee;color:#c62828;border-color:#f44336;">返回错误信息</div>
+          </div>
+          <div class="branch">
+            <div class="label label-yes">✅ 成功</div>
+            <div class="side-arrow-v"></div>
+            <div class="box process" style="background:#e8f5e9;color:#2e7d32;border-color:#4caf50;">生成Token</div>
+            <div class="arrow"></div>
+            <div class="box process">跳转到首页</div>
+            <div class="arrow"></div>
+            <div class="box start-end">结束</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 注册流程图 -->
+<div class="chart-card" id="register-chart">
+  <h2>📝 用户注册流程</h2>
+  <div class="flow">
+    <div class="box start-end">开始</div>
+    <div class="arrow"></div>
+    <div class="box process">填写注册信息</div>
+    <div class="arrow"></div>
+    <div class="box decision">前端表单验证<br>（格式、必填项）</div>
+    <div class="row">
+      <div class="branch">
+        <div class="label label-no">❌ 未通过</div>
+        <div class="side-arrow-v"></div>
+        <div class="box process" style="background:#ffebee;color:#c62828;border-color:#f44336;">提示错误信息</div>
+      </div>
+      <div class="branch">
+        <div class="label label-yes">✅ 通过</div>
+        <div class="side-arrow-v"></div>
+        <div class="box decision">检查用户名<br>是否已存在</div>
+        <div class="row" style="margin-top:8px;">
+          <div class="branch">
+            <div class="label label-no">❌ 已存在</div>
+            <div class="side-arrow-v"></div>
+            <div class="box process" style="background:#ffebee;color:#c62828;border-color:#f44336;">提示用户名已占用</div>
+          </div>
+          <div class="branch">
+            <div class="label label-yes">✅ 不存在</div>
+            <div class="side-arrow-v"></div>
+            <div class="box process">密码加密存储</div>
+            <div class="arrow"></div>
+            <div class="box process">写入数据库</div>
+            <div class="arrow"></div>
+            <div class="box start-end">注册成功</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
